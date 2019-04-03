@@ -15,6 +15,7 @@ public class OrderController {
 	@RequestMapping("/buySth")
 	@ResponseBody
 	public Integer buySomething(@RequestParam int userId,@RequestParam int money){
+		// TODO: g  controller层提供接口，直接调用具体biz
 		return orderService.buySomething(userId, money);
 	}
 }

@@ -23,6 +23,7 @@ public class OrderApplication {
 	 */
 	@Bean
 	public WalletPayMoneyService payService(CallWrapUtil util) {
+		// TODO: G 注入 远程服务接口及实现，WalletPayMoneyService为服务接口、WalletPayRequestCfg配置了具体实现
 		return util.createTransactionCallInstance(WalletPayMoneyService.class, WalletPayRequestCfg.class);
 	}
 	

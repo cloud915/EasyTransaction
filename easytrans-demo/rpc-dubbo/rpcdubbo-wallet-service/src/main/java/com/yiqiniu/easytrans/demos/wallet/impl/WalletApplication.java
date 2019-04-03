@@ -41,6 +41,8 @@ public class WalletApplication {
 	
 	/**
 	 * This is an optional bean, you can modify Dubbo reference here to change the behavior of consumer
+	 *
+	 * 这是一个可选的bean，您可以在这里修改Dubbo引用来更改使用者的行为
 	 */
 	@Bean
 	public DubboServiceCustomizationer dubboProviderCustomizationer() {

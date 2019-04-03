@@ -24,7 +24,9 @@ public class OrderFinishedMessageHandler implements ReliableMessageHandler<Order
 
 	@Override
 	public EasyTransConsumeAction consume(EasyTransRequest<?, ?> request) {
+		//TODO: G  猜测：事务消息流程，下面是pre阶段后，本地操作
 		pointService.addPointForBuying((OrderFinishedMessage) request);
+		//TODO: G  猜测：完成本地操作后，进入commit阶段，告知框架（cancel/ReconsumeLater应该由异常处理执行）
 		return EasyTransConsumeAction.CommitMessage;
 	}
 }

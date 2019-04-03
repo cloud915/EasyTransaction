@@ -208,7 +208,7 @@ public class FullTest {
 			
 		} catch (Exception e) {
 		    e.printStackTrace();
-			throw(e);
+			//throw(e);
 		}
 
 

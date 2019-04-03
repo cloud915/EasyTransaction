@@ -8,6 +8,7 @@ import com.yiqiniu.easytrans.demos.wallet.api.vo.WalletPayVO.WalletPayRequestVO;
 import com.yiqiniu.easytrans.demos.wallet.api.vo.WalletPayVO.WalletPayResponseVO;
 import com.yiqiniu.easytrans.protocol.tcc.TccMethod;
 
+// TODO: G 实现了TccMethod，作为远程调用方法
 @Component
 public class WalletPayTccService implements TccMethod<WalletPayRequestVO, WalletPayResponseVO>{
 

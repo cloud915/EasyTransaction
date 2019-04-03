@@ -25,23 +25,24 @@ public class OrderService {
 	
 	public static final String BUSINESS_CODE = "buySth";
 
-
+	// TODO: G 远程服务调用，统一由EasyTransFacade进行事务管理
 	@Resource
 	private EasyTransFacade transaction;
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 	
-	
+	// 加入spring事务，保证本地操作的事务性
 	@Transactional
 	public int buySomething(int userId,long money){
-		
+
 		/**
 		 * finish the local transaction first, in order for performance and generated of business id
 		 * 
 		 * 优先完成本地事务以 1. 提高性能（减少异常时回滚消耗）2. 生成事务内交易ID 
 		 */
 		Integer id = saveOrderRecord(jdbcTemplate,userId,money);
-		
+		// TODO: G  本地事务提交、回滚，由spring控制
+
 		/**
 		 * annotation the global transactionId, it is combined of appId + bussiness_code + id
 		 * it can be omit,then framework will use "default" as businessCode, and will generate an id
@@ -52,7 +53,8 @@ public class OrderService {
 		 * 但这样的话，会使得我们难以把全局事务ID与一个具体的事务关联起来
 		 */
 		transaction.startEasyTrans(BUSINESS_CODE, id);
-		
+		// TODO: G  easyTrans 开始组织、配置 数据
+
 		/**
 		 * call remote service to deduct money, it's a TCC service,
 		 * framework will maintains the eventually constancy based on the final transaction status of method buySomething 
@@ -67,12 +69,14 @@ public class OrderService {
 		WalletPayRequestVO deductRequest = new WalletPayRequestVO();
 		deductRequest.setUserId(userId);
 		deductRequest.setPayAmount(money);
+		// TODO: G  封装RQ，该RQ类型由具体实现定义
 		/**
 		 * return future for the benefits of performance enhance(batch write execute log and batch execute RPC)
 		 * 返回future是为了能方便的优化性能(批量写日志及批量调用RPC)
 		 */
 		@SuppressWarnings("unused")
 		Future<WalletPayResponseVO> deductFuture = transaction.execute(deductRequest);
+		// TODO: G  调用wallet-service，进行远程事务方法调用、传参
 		
 		
 		/**
@@ -86,6 +90,7 @@ public class OrderService {
 		orderFinishedMsg.setUserId(userId);
 		orderFinishedMsg.setOrderAmt(money);
 		transaction.execute(orderFinishedMsg);
+		// TODO: G  调用point-service
 		
 		/**
 		 * you can add more types of transaction calls here, e.g. TCC,reliable message, SAGA-TCC and so on

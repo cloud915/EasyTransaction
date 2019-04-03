@@ -2,22 +2,22 @@ spring:
   application:
     name: order-service  # the same with com.yiqiniu.easytrans.demos.order.Constant.APPID
   datasource: # order service datasource config
-    url: jdbc:mysql://localhost:3306/order?characterEncoding=UTF-8&useSSL=false
-    username: root
-    password: 123456
+    url: jdbc:mysql://47.105.168.48:3306/order?characterEncoding=UTF-8&useSSL=false
+    username: easyTrans
+    password: pwd123
     driver-class-name: com.mysql.jdbc.Driver
 
-server: 
+server:
   port: 8080
 
 easytrans:
   master:
     zk:
-      zooKeeperUrl: localhost:2281
+      zooKeeperUrl: 47.105.168.48:2181
   rpc:
     dubbo:
       enabled: true
-      
+
   stringcodec:
     zk:
       zooKeeperUrl: ${easytrans.master.zk.zooKeeperUrl}
@@ -32,9 +32,9 @@ easytrans:
       logCleanTime: 01:22:00
       druid:
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/order_translog?characterEncoding=UTF-8&useSSL=false
-        username: root
-        password: 123456
+        url: jdbc:mysql://47.105.168.48:3306/order_translog?characterEncoding=UTF-8&useSSL=false
+        username: easyTrans
+        password: pwd123
 
 
 # Dubbo Config properties
@@ -46,7 +46,7 @@ dubbo:
     name: dubbo
     port: 20880
   registry:
-    address: zookeeper://localhost:2281
+    address: zookeeper://47.105.168.48:2181
   provider:
     timeout: 1000
   consumer:
