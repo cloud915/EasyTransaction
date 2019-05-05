@@ -9,3 +9,5 @@ server_back.properties
 /.classpath
 /logs
 /target/
+*.iml
+.idea/
